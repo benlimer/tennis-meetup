@@ -26,11 +26,39 @@ class User extends uniqueFunc(Model) {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["email"],
+      required: ["email", "name", "location", "skillLevel"],
 
       properties: {
         email: { type: "string", format: "email" },
         cryptedPassword: { type: "string" },
+        name: { type: "string" },
+        location: { type: ["string", "integer"] },
+        skillLevel: { type: ["string", "integer"] },
+        gender: { type: "string" },
+        age: { type: ["integer", "string"] },
+      },
+    };
+  }
+
+  static get relationMappings() {
+    const Match = require("./Match");
+
+    return {
+      userOnes: {
+        relation: Model.HasManyRelation,
+        modelClass: Match,
+        join: {
+          from: "users.id",
+          to: "matches.userOneId",
+        },
+      },
+      userTwos: {
+        relation: Model.HasManyRelation,
+        modelClass: Match,
+        join: {
+          from: "users.id",
+          to: "matches.userTwoId",
+        },
       },
     };
   }
