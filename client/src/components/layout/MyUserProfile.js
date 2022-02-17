@@ -16,7 +16,6 @@ const MyUserProfile = (props) => {
       throw new Error(`${response.status} ${response.statusText}`)
     }
     const body = await response.json()
-    console.log(body)
     setUser(body.user)
   };
 
