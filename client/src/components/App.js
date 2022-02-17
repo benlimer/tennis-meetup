@@ -12,6 +12,7 @@ import AuthenticatedRoute from "./authentication/AuthenticatedRoute";
 import Index from "./layout/Index";
 import PlayerList from "./layout/PlayerList"
 import CourtList from "./layout/CourtList";
+import UserProfile from "./layout/UserProfile";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -45,8 +46,13 @@ const App = (props) => {
           component={MyUserProfile}
           user={currentUser}
         />
+         <AuthenticatedRoute
+          exact path="/users/:id"
+          component={UserProfile}
+          user={currentUser}
+        />
         <Route exact path="/courts" component={CourtList} />
-      </Switch>
+       </Switch>
     </Router>
   );
 };
