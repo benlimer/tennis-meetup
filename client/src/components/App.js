@@ -7,6 +7,10 @@ import "../assets/scss/main.scss";
 import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
+import MyUserProfile from "./layout/MyUserProfile";
+import AuthenticatedRoute from "./authentication/AuthenticatedRoute";
+import Index from "./layout/Index";
+import PlayerList from "./layout/PlayerList"
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -27,11 +31,19 @@ const App = (props) => {
     <Router>
       <TopBar user={currentUser} />
       <Switch>
-        <Route exact path="/">
-          <h2>Hello from react</h2>
-        </Route>
+        <Route exact path="/" component={Index}/>
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
+        <AuthenticatedRoute
+          exact path="/find-players"
+          component={PlayerList}
+          user={currentUser}
+        />
+        <AuthenticatedRoute
+          exact path="/my-user-profile"
+          component={MyUserProfile}
+          user={currentUser}
+        />
       </Switch>
     </Router>
   );
