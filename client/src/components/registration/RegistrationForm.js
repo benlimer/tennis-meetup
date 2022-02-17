@@ -7,6 +7,9 @@ const RegistrationForm = () => {
     email: "",
     password: "",
     passwordConfirmation: "",
+    name: "",
+    skillLevel: "",
+    location: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -15,7 +18,7 @@ const RegistrationForm = () => {
 
   const validateInput = (payload) => {
     setErrors({});
-    const { email, password, passwordConfirmation } = payload;
+    const { email, password, passwordConfirmation, name, skillLevel, location } = payload;
     const emailRegexp = config.validation.email.regexp.emailRegex;
     let newErrors = {};
     if (!email.match(emailRegexp)) {
@@ -46,12 +49,34 @@ const RegistrationForm = () => {
       }
     }
 
+    if (name.trim() == "") {
+      newErrors = {
+        ...newErrors,
+        name: "is required",
+      };
+    }
+
+    if (skillLevel.trim() == "") {
+      newErrors = {
+        ...newErrors,
+        skillLevel: "is required",
+      };
+    }
+
+    if (location.trim() == "") {
+      newErrors = {
+        ...newErrors,
+        location: "is required",
+      };
+    }
+
     setErrors(newErrors);
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
     validateInput(userPayload);
+    console.log(userPayload)
     try {
       if (Object.keys(errors).length === 0) {
         const response = await fetch("/api/v1/users", {
@@ -118,6 +143,37 @@ const RegistrationForm = () => {
               onChange={onInputChange}
             />
             <FormError error={errors.passwordConfirmation} />
+          </label>
+        </div>
+        <div>
+          <label>
+            Name
+            <input type="text" name="name" value={userPayload.name} onChange={onInputChange} />
+            <FormError error={errors.name} />
+          </label>
+        </div>
+        <div>
+          <label>
+            Skill Level
+            <input
+              type="text"
+              name="skillLevel"
+              value={userPayload.skillLevel}
+              onChange={onInputChange}
+            />
+            <FormError error={errors.skillLevel} />
+          </label>
+        </div>
+        <div>
+          <label>
+            Location
+            <input
+              type="text"
+              name="location"
+              value={userPayload.location}
+              onChange={onInputChange}
+            />
+            <FormError error={errors.location} />
           </label>
         </div>
         <div>
