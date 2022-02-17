@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 const PlayerTile = ({ player }) => {
   const { id, name, skillLevel, location, age, gender } = player;

@@ -5,6 +5,8 @@ const Index = (props) => {
     return (
         <div>
             <Link to="/find-players">Find players</Link>
+            <br/>
+            <Link to="/courts">Find courts</Link>
         </div>
 
     )
