@@ -8,13 +8,11 @@ userMatchesRouter.post("/", async (req, res) => {
   const opponentId = req.params.opponentId;
   const matchData = req.body
   const {type, date, result} = matchData
-  console.log(hostId)
   try {
     const opponent = await User.query().findById(opponentId);
     const matches = await opponent.$relatedQuery("opponentMatches").insertAndFetch({type, date, result, hostId})
     return res.status(201).json({ matches });
   } catch (error) {
-    console.log(error)
     return res.status(500).json({ errors: error });
   }
 });

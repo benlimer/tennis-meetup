@@ -10,7 +10,6 @@ usersRouter.get("/", async (req, res) => {
   const userId = req.body
   try {
     const players = await User.query().where('id', '!=', userId)
-    console.log(players)
   } catch (error) {
     return res.status(500).json({ errors: error });
   }
@@ -30,7 +29,6 @@ usersRouter.post("/", async (req, res) => {
       return res.status(201).json({ user: persistedUser });
     });
   } catch (error) {
-    console.log(error);
     return res.status(422).json({ errors: error });
   }
 });
