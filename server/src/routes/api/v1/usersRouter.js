@@ -1,6 +1,8 @@
 import express from "express";
 import passport from "passport";
+
 import { User } from "../../../models/index.js";
+import userMatchesRouter from "./userMatches.js";
 
 const usersRouter = new express.Router();
 
@@ -38,10 +40,13 @@ usersRouter.get("/:id", async (req, res) => {
   const userId = req.params.id;
   try {
     const userData = await User.query().findById(userId);
+    userData.matches = await userData.$relatedQuery("opponentMatches")
     return res.status(201).json({ user: userData});
   } catch (error) {
     return res.status(500).json({ errors: error });
   }
 });
+
+usersRouter.use("/:opponentId/matches/:hostId", userMatchesRouter)
 
 export default usersRouter;

@@ -44,20 +44,20 @@ class User extends uniqueFunc(Model) {
     const Match = require("./Match");
 
     return {
-      userOnes: {
+      hostMatches: {
         relation: Model.HasManyRelation,
         modelClass: Match,
         join: {
           from: "users.id",
-          to: "matches.userOneId",
+          to: "matches.hostId",
         },
       },
-      userTwos: {
+      opponentMatches: {
         relation: Model.HasManyRelation,
         modelClass: Match,
         join: {
           from: "users.id",
-          to: "matches.userTwoId",
+          to: "matches.opponentId",
         },
       },
     };
