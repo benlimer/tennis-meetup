@@ -13,6 +13,7 @@ import Index from "./layout/Index";
 import PlayerList from "./layout/PlayerList"
 import CourtList from "./layout/CourtList";
 import UserProfile from "./layout/UserProfile";
+import Messenger from "./messenger/Messenger";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -24,6 +25,8 @@ const App = (props) => {
       setCurrentUser(null)
     }
   }
+  
+  
 
   useEffect(() => {
     fetchCurrentUser()
@@ -49,6 +52,11 @@ const App = (props) => {
          <AuthenticatedRoute
           exact path="/users/:id"
           component={UserProfile}
+          user={currentUser}
+        />
+         <AuthenticatedRoute
+          exact path="/messenger"
+          component={Messenger}
           user={currentUser}
         />
         <Route exact path="/courts" component={CourtList} />

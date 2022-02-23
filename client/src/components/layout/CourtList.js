@@ -27,7 +27,7 @@ const CourtList = (props) => {
 
   return (
     <div>
-      <h1>Hello from CourtList</h1>
+      <h3>Nearby Courts</h3>
       {courtTiles}
     </div>
   );

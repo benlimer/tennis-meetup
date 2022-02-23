@@ -10,9 +10,9 @@ class Match extends Model {
       type: "object",
       required: ["type", "date"],
       properties: {
-        type: { type: "string", minLength: 1, maxLength: 30 },
-        userIdOne: { type: "integer" },
-        userIdTwo: { type: "integer" },
+        type: { type: "string" },
+        hostId: { type: ["integer", "string"] },
+        opponentId: { type: ["integer", "string"] },
         result: { type: "string" },
         date: { type: ["string", "integer"] },
         courtId: { type: "integer" },
@@ -25,20 +25,20 @@ class Match extends Model {
     const Court = require("./Court");
 
     return {
-      userOne: {
+      host: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: "matches.userIdOne",
+          from: "matches.hostId",
           to: "users.id",
         },
       },
 
-      userTwo: {
+      opponent: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: "matches.userIdTwo",
+          from: "matches.opponentId",
           to: "users.id",
         },
       },
