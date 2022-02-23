@@ -110,75 +110,84 @@ const RegistrationForm = () => {
   }
 
   return (
-    <div className="grid-container">
-      <h1>Register</h1>
-      <form onSubmit={onSubmit}>
-        <div>
-          <label>
-            Email
-            <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
-            <FormError error={errors.email} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password
-            <input
-              type="password"
-              name="password"
-              value={userPayload.password}
-              onChange={onInputChange}
-            />
-            <FormError error={errors.password} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password Confirmation
-            <input
-              type="password"
-              name="passwordConfirmation"
-              value={userPayload.passwordConfirmation}
-              onChange={onInputChange}
-            />
-            <FormError error={errors.passwordConfirmation} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Name
-            <input type="text" name="name" value={userPayload.name} onChange={onInputChange} />
-            <FormError error={errors.name} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Skill Level
-            <input
-              type="text"
-              name="skillLevel"
-              value={userPayload.skillLevel}
-              onChange={onInputChange}
-            />
-            <FormError error={errors.skillLevel} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Location
-            <input
-              type="text"
-              name="location"
-              value={userPayload.location}
-              onChange={onInputChange}
-            />
-            <FormError error={errors.location} />
-          </label>
-        </div>
-        <div>
-          <input type="submit" className="button" value="Register" />
-        </div>
-      </form>
+    <div className="form-background">
+      <div className="form grid-container">
+        <h2>Create your account</h2>
+        <form onSubmit={onSubmit}>
+          <div>
+            <label>
+              Email
+              <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
+              <FormError error={errors.email} />
+            </label>
+          </div>
+          <div>
+            <label>
+              Name
+              <input type="text" name="name" value={userPayload.name} onChange={onInputChange} />
+              <FormError error={errors.name} />
+            </label>
+          </div>
+          <div>
+            <label>
+              Password
+              <input
+                type="password"
+                name="password"
+                value={userPayload.password}
+                onChange={onInputChange}
+              />
+              <FormError error={errors.password} />
+            </label>
+          </div>
+          <div>
+            <label>
+              Password Confirmation
+              <input
+                type="password"
+                name="passwordConfirmation"
+                value={userPayload.passwordConfirmation}
+                onChange={onInputChange}
+              />
+              <FormError error={errors.passwordConfirmation} />
+            </label>
+          </div>
+          <div>
+            <label>
+              Name
+              <input type="text" name="name" value={userPayload.name} onChange={onInputChange} />
+              <FormError error={errors.name} />
+            </label>
+          </div>
+          <div>
+            <label>
+              Skill Level
+              <input
+                type="text"
+                name="skillLevel"
+                value={userPayload.skillLevel}
+                onChange={onInputChange}
+              />
+              <FormError error={errors.skillLevel} />
+            </label>
+          </div>
+          <div>
+            <label>
+              Location 
+              <input
+                type="text"
+                name="location"
+                value={userPayload.location}
+                onChange={onInputChange}
+              />
+              <FormError error={errors.location} />
+            </label>
+          </div>
+          <div>
+            <input type="submit" className="button" value="Register" />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

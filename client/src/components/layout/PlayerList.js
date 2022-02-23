@@ -17,18 +17,21 @@ const PlayerList = (props) => {
       console.log(error);
     }
   };
+  
+ 
+  const playerTiles = players.map((player) => {
+  
+    return <PlayerTile key={player.id} player={player} />;
+  });
 
   useEffect(() => {
     getPlayers();
   }, []);
 
-  const playerTiles = players.map((player) => {
-    return <PlayerTile key={player.id} player={player} />;
-  });
 
   return (
     <div>
-      <h1>Hello from PlayerList</h1>
+      <h3>Nearby Players</h3>
       {playerTiles}
     </div>
   );

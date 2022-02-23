@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-const MatchTile = ({ match }) => {
-  const { type, result, date, hostId } = match;
-
+const MatchTile = (props) => {
+  const { type, result, date } = props.match;
+  const { showId } = props;
   const [hostName, setHostName] = useState("");
 
   const getHostName = async () => {
     try {
-      const response = await fetch(`/api/v1/users/${hostId}`);
+      const response = await fetch(`/api/v1/users/${showId}`);
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
       }
@@ -20,10 +20,10 @@ const MatchTile = ({ match }) => {
   useEffect(() => {
     getHostName();
   }, []);
-  
+
   return (
     <div className="Match cell card small-12 medium-6 large-4">
-      <div className="card-section orange grid-x">
+      <div className="card-section grid-x">
         <div className="Match-name cell small-6">
           <h4>Vs. {hostName}</h4>
           <p>Type: {type}</p>

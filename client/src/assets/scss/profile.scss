@@ -1,0 +1,40 @@
+.user-info {
+    font-size: 2rem;
+    line-height: 1.2;
+    margin-bottom: 30px;
+    border: 1px solid #fff;
+    padding: 10px 30px;
+    background-color: var(--green);
+}
+
+.nav-links {
+    display:inline-flex;
+}
+
+.Match {
+    font-size: 1.2rem;
+    line-height: 1.2;
+    margin-bottom: 30px;
+    border: 1px solid #fff;
+    padding: 10px 30px;
+    background-color: var(--green);
+}
+
+.profile .grid-container {
+    height: 92vh;
+    overflow: hidden;
+    margin: 0 auto;
+    padding-top: 60px;
+}
+
+.overflow {
+    height: 80%;
+    position: relative;
+    overflow-y: scroll;
+}
+
+.nav-links .btn{
+    font-size: 1.2rem;
+    font-weight: 400px;
+    color: var(--blue);
+}

@@ -13,11 +13,11 @@ const UserProfile = (props) => {
     email: "",
     skillLevel: "",
     location: "",
-    matches: []
+    matches: [],
   });
 
   const [shouldRedirect, setShouldRedirect] = useState(false);
-  const [showPostMatchForm, setShowPostMatchForm] = useState(false)
+  const [showPostMatchForm, setShowPostMatchForm] = useState(false);
 
   const getUserData = async () => {
     const response = await fetch(`/api/v1/users/${playerId}`);
@@ -43,7 +43,7 @@ const UserProfile = (props) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(match)
+        body: JSON.stringify(match),
       });
       if (!response.ok) {
         const errorMessage = `${response.status} ${response.statusText}`;
@@ -52,18 +52,22 @@ const UserProfile = (props) => {
       }
       const body = await response.json();
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
   };
 
   const showPostMatchFormHandler = () => {
-      setShowPostMatchForm(!showPostMatchForm)
-  }
+    setShowPostMatchForm(!showPostMatchForm);
+  };
 
-  const matchList= user.matches.map((match) => {
-    return <MatchTile key={match.id} match={match} />;
+  const matchList = user.matches.map((match) => {
+    if(currentUserId == match.hostId){
+      return <MatchTile key={match.id} match={match} showId={match.hostId}/>;
+    } else if(currentUserId == match.opponentId){
+      return <MatchTile key={match.id} match={match} showId={match.opponentId}/>;
+    }
   });
-  
+
   if (shouldRedirect) {
     return <Redirect push to="/find-players" />;
   }
@@ -71,15 +75,22 @@ const UserProfile = (props) => {
   return (
     <div className="grid-container profile">
       <div className="grid-x grid-margin-x my-stuff">
-        <a onClick={goBackHandler}>Back</a> &nbsp;
-        <a onClick={showPostMatchFormHandler}>Post match results with this player</a>
-        {showPostMatchForm && (
-        <PostMatchForm
-          postMatch={postMatch}
-          showPostMatchFormHandler={showPostMatchFormHandler}
-        />
-      )}
-        <div className="cell small-12">
+        <div className="cell nav-links small-12">
+          <a className="btn back" onClick={goBackHandler}>
+            Back
+          </a>{" "}
+          &nbsp;
+          <a className="btn" onClick={showPostMatchFormHandler}>
+            Post match results{" "}
+          </a>
+          {showPostMatchForm && (
+            <PostMatchForm
+              postMatch={postMatch}
+              showPostMatchFormHandler={showPostMatchFormHandler}
+            />
+          )}
+        </div>
+        <div className="cell small-6">
           <h1>{user.name}</h1>
 
           <p className="user-info">
@@ -93,7 +104,7 @@ const UserProfile = (props) => {
         </div>
         <div className="cell small-12 large-5">
           <h3>Matches</h3>
-          {matchList}
+          <div className="overflow">{matchList}</div>
         </div>
       </div>
     </div>
