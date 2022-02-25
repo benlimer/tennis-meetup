@@ -7,6 +7,8 @@ import "./boot.js";
 import configuration from "./config.js";
 import addMiddlewares from "./middlewares/addMiddlewares.js";
 import rootRouter from "./routes/rootRouter.js";
+import cors from "cors"
+import { Server } from "socket.io"
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -23,7 +25,7 @@ app.engine(
     extname: ".hbs",
   })
 );
-app.set("view engine", "hbs");
+app.set("view engine", "hbs"); 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../public")));
@@ -35,6 +37,33 @@ app.use(
 app.use(bodyParser.json());
 addMiddlewares(app);
 app.use(rootRouter);
+app.use(cors());
+
+const server = app.listen(3001)
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"]
+  }
+})
+
+io.on("connection", (socket) => {
+  console.log(`Connected User: ${socket.id}`)
+
+  socket.on("join_room", (data) => {
+    socket.join(data)
+    console.log(`User with ID: ${socket.id} joined room: ${data}`)
+  })
+
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data)
+  })
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected", socket.id)
+  })
+})
+
 app.listen(configuration.web.port, configuration.web.host, () => {
   console.log("Server is listening...");
 });

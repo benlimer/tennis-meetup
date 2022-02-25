@@ -29,6 +29,7 @@ class UserSeeder {
       gender: "M",
       age:35
     });
+    
   }
 }
 

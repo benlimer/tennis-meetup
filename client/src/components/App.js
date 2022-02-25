@@ -10,57 +10,47 @@ import TopBar from "./layout/TopBar";
 import MyUserProfile from "./layout/MyUserProfile";
 import AuthenticatedRoute from "./authentication/AuthenticatedRoute";
 import Index from "./layout/Index";
-import PlayerList from "./layout/PlayerList"
+import PlayerList from "./layout/PlayerList";
 import CourtList from "./layout/CourtList";
 import UserProfile from "./layout/UserProfile";
 import Messenger from "./messenger/Messenger";
+import JoinRoom from "./messenger/JoinRoom";
+
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(null);
   const fetchCurrentUser = async () => {
     try {
-      const user = await getCurrentUser()
-      setCurrentUser(user)
-    } catch(err) {
-      setCurrentUser(null)
+      const user = await getCurrentUser();
+      setCurrentUser(user);
+    } catch (err) {
+      setCurrentUser(null);
     }
-  }
-  
-  
+  };
 
   useEffect(() => {
-    fetchCurrentUser()
-  }, [])
+    fetchCurrentUser();
+  }, []);
 
   return (
     <Router>
       <TopBar user={currentUser} />
       <Switch>
-        <Route exact path="/" component={Index}/>
+        <Route exact path="/" component={Index} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
+        <AuthenticatedRoute exact path="/find-players" component={PlayerList} user={currentUser} />
         <AuthenticatedRoute
-          exact path="/find-players"
-          component={PlayerList}
-          user={currentUser}
-        />
-        <AuthenticatedRoute
-          exact path="/my-user-profile"
+          exact
+          path="/my-user-profile"
           component={MyUserProfile}
           user={currentUser}
         />
-         <AuthenticatedRoute
-          exact path="/users/:id"
-          component={UserProfile}
-          user={currentUser}
-        />
-         <AuthenticatedRoute
-          exact path="/messenger"
-          component={Messenger}
-          user={currentUser}
-        />
+        <AuthenticatedRoute exact path="/users/:id" component={UserProfile} user={currentUser} />
+        <AuthenticatedRoute exact path="/messenger" component={Messenger} user={currentUser} />
+        <AuthenticatedRoute exact path="/join-room" component={JoinRoom} user={currentUser} />
         <Route exact path="/courts" component={CourtList} />
-       </Switch>
+      </Switch>
     </Router>
   );
 };

@@ -13,7 +13,7 @@ const PlayerTile = ({ player }) => {
         <div className="card-section grid-x">
           <div className="Player-name cell small-6">
             <h4>{name}</h4>
-            <p>{roundedDistance}Km</p>
+            <p className="distance">{roundedDistance}Km away</p>
           </div>
           <div className="Player-detail cell small-6">
             <p>
