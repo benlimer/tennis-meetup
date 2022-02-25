@@ -85,11 +85,10 @@ ul.menu {
   color: var(--purple)
 }
 
-.message-link {
-  margin-right: 10px;
+.message-link,
+.profile-link,
+.join-room-link {
+  margin: 10px;
 }
 
-.profile-link {
-  margin-left: 10px;
-}
 

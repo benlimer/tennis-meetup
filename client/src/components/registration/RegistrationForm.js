@@ -10,6 +10,8 @@ const RegistrationForm = () => {
     name: "",
     skillLevel: "",
     location: "",
+    age: "",
+    gender: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -121,13 +123,7 @@ const RegistrationForm = () => {
               <FormError error={errors.email} />
             </label>
           </div>
-          <div>
-            <label>
-              Name
-              <input type="text" name="name" value={userPayload.name} onChange={onInputChange} />
-              <FormError error={errors.name} />
-            </label>
-          </div>
+
           <div>
             <label>
               Password
@@ -173,7 +169,7 @@ const RegistrationForm = () => {
           </div>
           <div>
             <label>
-              Location 
+              Location
               <input
                 type="text"
                 name="location"
@@ -181,6 +177,25 @@ const RegistrationForm = () => {
                 onChange={onInputChange}
               />
               <FormError error={errors.location} />
+            </label>
+          </div>
+          <div>
+            <label>
+              Age
+              <input type="text" name="age" value={userPayload.age} onChange={onInputChange} />
+              <FormError error={errors.age} />
+            </label>
+          </div>
+          <div>
+            <label>
+              Gender
+              <input
+                type="text"
+                name="gender"
+                value={userPayload.gender}
+                onChange={onInputChange}
+              />
+              <FormError error={errors.gender} />
             </label>
           </div>
           <div>
