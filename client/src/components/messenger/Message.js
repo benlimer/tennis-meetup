@@ -1,15 +1,17 @@
 import React from "react";
 import federer from "../../assets/federer.jpeg";
+import { format } from "timeago.js";
 
-const Message = ({ username, messageContent }) => {
+
+const Message = ({ user, messageContent }) => {
   return (
-    <div className={username === messageContent.author ? "message own" : "message"}>
+    <div className={user.name === messageContent.author ? "message own" : "message"}>
       <div className="messageTop">
         <img className="messageImg" src={federer} />
-        <p className="messageText">{messageContent.message}</p>
+        <p className="messageText">{messageContent.text}</p>
       </div>
       <div className="messageBottom">
-        <p id="time">{messageContent.time}</p>
+        <p id="time">{format(messageContent.createdAt)}</p>
         <p id="author">{messageContent.author}</p>
       </div>
     </div>
@@ -17,4 +19,3 @@ const Message = ({ username, messageContent }) => {
 };
 
 export default Message;
-

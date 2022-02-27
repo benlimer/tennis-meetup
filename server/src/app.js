@@ -7,8 +7,8 @@ import "./boot.js";
 import configuration from "./config.js";
 import addMiddlewares from "./middlewares/addMiddlewares.js";
 import rootRouter from "./routes/rootRouter.js";
-import cors from "cors"
-import { Server } from "socket.io"
+import cors from "cors";
+import { Server } from "socket.io";
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -25,10 +25,11 @@ app.engine(
     extname: ".hbs",
   })
 );
-app.set("view engine", "hbs"); 
+app.set("view engine", "hbs");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../public")));
+
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -39,30 +40,63 @@ addMiddlewares(app);
 app.use(rootRouter);
 app.use(cors());
 
-const server = app.listen(3001)
+const server = app.listen(3001);
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
-  }
-})
+    methods: ["GET", "POST"],
+  },
+});
+let users = [];
+
+const addUser = (userId, socketId, userName) => {
+  !users.some((user) => user.userId === userId) && users.push({ userId, socketId, userName });
+};
+
+const removeUser = (socketId) => {
+  users = users.filter((user) => user.socketId !== socketId);
+};
+
+const getUser = (userId) => {
+  return users.find((user) => user.userId == userId);
+};
 
 io.on("connection", (socket) => {
-  console.log(`Connected User: ${socket.id}`)
+  console.log(`Connected User: ${socket.id}`);
 
-  socket.on("join_room", (data) => {
-    socket.join(data)
-    console.log(`User with ID: ${socket.id} joined room: ${data}`)
-  })
-
-  socket.on("send_message", (data) => {
-    socket.to(data.room).emit("receive_message", data)
-  })
+  socket.on("addUser", (userId, userName) => {
+    addUser(userId, socket.id, userName);
+    // for (let i = 0; i < users.length; i++) {
+    //   console.log(
+    //     "userId: " +
+    //       users[i]?.userId +
+    //       "userName: " +
+    //       users[i]?.userName +
+    //       " socketId: " +
+    //       users[i]?.socketId +
+    //       " length: " +
+    //       users.length
+    //   );
+    // }
+    io.emit("getUsers", users);
+  });
+  socket.on("sendMessage", ({ senderId, receiverId, text, chatId, author }) => {
+    const user = getUser(receiverId);
+    io.to(user.socketId).emit("getMessage", {
+      senderId,
+      text,
+      author,
+      chatId,
+      receiverId,
+    });
+  });
 
   socket.on("disconnect", () => {
-    console.log("User disconnected", socket.id)
-  })
-})
+    console.log("a user disconnected!");
+    removeUser(socket.id);
+    io.emit("getUsers", users);
+  });
+});
 
 app.listen(configuration.web.port, configuration.web.host, () => {
   console.log("Server is listening...");

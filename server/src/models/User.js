@@ -42,6 +42,8 @@ class User extends uniqueFunc(Model) {
 
   static get relationMappings() {
     const Match = require("./Match");
+    const Chat = require("./Chat.js")
+    const Message = require("./Message")
 
     return {
       hostMatches: {
@@ -59,6 +61,34 @@ class User extends uniqueFunc(Model) {
           from: "users.id",
           to: "matches.opponentId",
         },
+      },
+      senderMessages: {
+        relation: Model.HasManyRelation,
+        modelClass: Message,
+        join: {
+          from: "users.id",
+          to: "messages.senderId"
+        }
+      },
+      receiverMessages: {
+        relation: Model.HasManyRelation,
+        modelClass: Message,
+        join: {
+          from: "users.id",
+          to: "messages.receiverId"
+        }
+      },
+      chats: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Chat,
+        join: {
+          from: "users.id",
+          through:{
+            from: "messages.senderId",
+            to: "messages.chatId"
+          },
+          to: "chats.id" 
+        }
       },
     };
   }
