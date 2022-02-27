@@ -29,7 +29,6 @@ const TopBar = ({ user }) => {
         <div className="header-middle">
           <Link to="/messenger" className="message-link">Messages</Link>
           <Link to="/my-user-profile" className="profile-link">Profile</Link>
-          <Link to="/join-room" className="join-room-link">Join Chat Room</Link>
         </div>
         <div className="header-right">
           <ul className="menu">{user ? authenticatedListItems : unauthenticatedListItems}</ul>
