@@ -40,7 +40,7 @@ addMiddlewares(app);
 app.use(rootRouter);
 app.use(cors());
 
-const server = app.listen(3001);
+const server = app.listen(process.env.PORT || 3001);
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000",
@@ -66,18 +66,6 @@ io.on("connection", (socket) => {
 
   socket.on("addUser", (userId, userName) => {
     addUser(userId, socket.id, userName);
-    // for (let i = 0; i < users.length; i++) {
-    //   console.log(
-    //     "userId: " +
-    //       users[i]?.userId +
-    //       "userName: " +
-    //       users[i]?.userName +
-    //       " socketId: " +
-    //       users[i]?.socketId +
-    //       " length: " +
-    //       users.length
-    //   );
-    // }
     io.emit("getUsers", users);
   });
   socket.on("sendMessage", ({ senderId, receiverId, text, chatId, author }) => {
