@@ -62,6 +62,8 @@
     "passport-local": "^1.0.0",
     "pg": "^8.5.1",
     "socket.io": "^4.4.1",
+    "got": "^9.6.0"
     "timeago.js": "^4.0.2"
+
   }
 }
