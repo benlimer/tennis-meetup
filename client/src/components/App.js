@@ -16,15 +16,14 @@ import UserProfile from "./layout/UserProfile";
 import Messenger from "./messenger/Messenger";
 import JoinRoom from "./messenger/JoinRoom";
 
-
 const App = (props) => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(undefined);
   const fetchCurrentUser = async () => {
     try {
       const user = await getCurrentUser();
       setCurrentUser(user);
     } catch (err) {
-      setCurrentUser(null);
+      setCurrentUser(undefined);
     }
   };
 
@@ -48,7 +47,6 @@ const App = (props) => {
         />
         <AuthenticatedRoute exact path="/users/:id" component={UserProfile} user={currentUser} />
         <AuthenticatedRoute exact path="/messenger" component={Messenger} user={currentUser} />
-        <AuthenticatedRoute exact path="/join-room" component={JoinRoom} user={currentUser} />
         <Route exact path="/courts" component={CourtList} />
       </Switch>
     </Router>
