@@ -14,7 +14,7 @@ const Messenger = ({ user }) => {
   const socket = useRef()
 
   useEffect(() => {
-    socket.current = io("ws://localhost:3001");
+    socket.current = io("https://tennis-meetup.herokuapp.com/");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         senderId: data.senderId,
@@ -65,13 +65,13 @@ const Messenger = ({ user }) => {
     chat.partnerId = firstIncomingMessage.senderId
     return (
       <div onClick={()=>setCurrentChat(chat)}>
-        <Chat name={firstIncomingMessage.author} image={user.image} />
+        <Chat chat={chat} currentUser={user} />
       </div>
       )
   })
 
   const displayMessageList = currentChat?.messages.map((messageContent) => {
-    return <Message messageContent={messageContent} user={user} />
+    return <Message messageContent={messageContent} userId={user.id} friendId={currentChat.partnerId} />
   })
 
   const handleSubmit = async (event) => {
@@ -115,7 +115,9 @@ const Messenger = ({ user }) => {
     }
   };
 
-  
+  const displayOnlineUsersList = onlineUsers.map((onlineUser) => {
+    return <ChatOnline onlineUser = {onlineUser} />
+  })
   return (
     <div className="messenger">
       <div className="chatMenu">
@@ -153,7 +155,7 @@ const Messenger = ({ user }) => {
       </div>
       <div className="chatOnline">
         <div className="chatOnlineWrapper">
-          <ChatOnline onlineUsers={onlineUsers} currentId={user.id} image={user.image} />
+          {displayOnlineUsersList}
         </div>
       </div>
     </div>

@@ -24,11 +24,11 @@ const MatchTile = (props) => {
   return (
     <div className="Match cell card small-12 medium-6 large-4">
       <div className="card-section grid-x">
-        <div className="Match-name cell small-6">
-          <h4>Vs. {hostName}</h4>
-          <p>Type: {type}</p>
-          <p>Date: {date}</p>
-          <p>Result: {result}</p>
+        <div className="Match-name cell">
+          <h3><strong>Vs. {hostName}</strong></h3>
+          <p><strong>Type: </strong> {type}</p>
+          <p><strong>Date: </strong>{date}</p>
+          <p><strong>Result:  </strong>{result}</p>
         </div>
       </div>
     </div>
