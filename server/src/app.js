@@ -41,12 +41,23 @@ app.use(rootRouter);
 app.use(cors());
 
 const server = app.listen(process.env.PORT || 3001);
-const io = new Server(server, {
-  cors: {
-    origin: "https://tennis-meetup.herokuapp.com/",
-    methods: ["GET", "POST"],
-  },
-});
+let io;
+if (process.env.NODE_ENV === "development") {
+  io = new Server(server, {
+    cors: {
+      origin: "http://localhost:3000",
+      methods: ["GET", "POST"],
+    },
+  });
+} else {
+  io = new Server(server, {
+    cors: {
+      origin: "https://tennis-meetup.herokuapp.com/",
+      methods: ["GET", "POST"],
+    },
+  });
+}
+
 let users = [];
 
 const addUser = (userId, socketId, userName) => {
@@ -86,7 +97,10 @@ io.on("connection", (socket) => {
   });
 });
 
-// app.listen(configuration.web.port, configuration.web.host, () => {
-//   console.log("Server is listening...");
-// });
+if (process.env.NODE_ENV === "development") {
+  app.listen(configuration.web.port, configuration.web.host, () => {
+    console.log("Server is listening...");
+  });
+} 
+
 export default app;
