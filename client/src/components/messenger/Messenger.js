@@ -138,7 +138,7 @@ const Messenger = ({ user }) => {
                   onChange={(event) => setNewMessage(event.target.value)}
                   value={newMessage}
                   onKeyPress={(event) => {
-                    event.key === "Enter" && handleSubmit();
+                    event.key === "Enter" && handleSubmit()
                   }}
                 ></textarea>
                 <button className="chatSubmitButton" onClick={handleSubmit} >

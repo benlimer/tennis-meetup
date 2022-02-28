@@ -17,21 +17,66 @@ const PlayerList = (props) => {
       console.log(error);
     }
   };
-  
- 
+
+  const addFriend = async (id) => {
+    try {
+      const response = await fetch(`/api/v1/friends/${id}`, {
+        method: "POST",
+        headers: new Headers({
+          "Content-type": "application/json",
+        }),
+      });
+      if (!response.ok) {
+        const errorMessage = `${response.status} (${response.statusText})`;
+        const error = new Error(errorMessage);
+        throw error;
+      }
+      const data = await response.json();
+      setPlayers((prev) =>
+        prev.map((player) =>
+          player.id === id ? { ...player, friendship: true } : player
+        )
+      );
+    } catch (error) {
+      console.log(`Error in fetch: ${error}`);
+    }
+  };
+
+  const deleteFriend = async (id) => {
+    try {
+      const response = await fetch(`/api/v1/friends/${id}`, {
+        method: "Delete",
+        headers: new Headers({
+          "Content-type": "application/json",
+        }),
+      });
+      if (!response.ok) {
+        const errorMessage = `${response.status} (${response.statusText})`;
+        const error = new Error(errorMessage);
+        throw error;
+      }
+      const data = await response.json();
+      setPlayers((prev) =>
+        prev.map((player) =>
+          player.id === id ? { ...player, friendship: false } : player
+        )
+      );
+    } catch (error) {
+      console.log(`Error in fetch: ${error}`);
+    }
+  };
+
   const playerTiles = players.map((player) => {
-  
-    return <PlayerTile key={player.id} player={player} />;
+    return <PlayerTile key={player.id} player={player} addFriend={addFriend} deleteFriend={deleteFriend}/>;
   });
 
   useEffect(() => {
     getPlayers();
   }, []);
 
-
   return (
-    <div>
-      <h3>Nearby Players</h3>
+    <div className="players-container">
+      <h3 className="heading">Nearby Players</h3>
       {playerTiles}
     </div>
   );
