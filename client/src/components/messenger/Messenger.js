@@ -1,20 +1,25 @@
-import React, { useEffect, useState, useRef } from "react"
-import ChatOnline from "./ChatOnline"
-import Chat from "./Chat"
-import Message from "./Message"
-import ScrollToBottom from "react-scroll-to-bottom"
-import io from "socket.io-client"
+import React, { useEffect, useState, useRef } from "react";
+import ChatOnline from "./ChatOnline";
+import Chat from "./Chat";
+import Message from "./Message";
+import ScrollToBottom from "react-scroll-to-bottom";
+import io from "socket.io-client";
 
 const Messenger = ({ user }) => {
-  const [chats, setChats] = useState([])
-  const [currentChat, setCurrentChat] = useState(null)
-  const [newMessage,setNewMessage] = useState("")
+  const [chats, setChats] = useState([]);
+  const [currentChat, setCurrentChat] = useState(null);
+  const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState([])
-  const socket = useRef()
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const socket = useRef();
 
   useEffect(() => {
-    socket.current = io("https://tennis-meetup.herokuapp.com/");
+    if (process.env.NODE_ENV === "development") {
+      socket.current = io("ws://localhost:3001");
+    }
+    else {
+      socket.current = io("https://tennis-meetup.herokuapp.com/");
+    }
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         senderId: data.senderId,
@@ -23,7 +28,7 @@ const Messenger = ({ user }) => {
         author: data.author,
         chatId: data.chatId,
         createdAt: Date.now(),
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
       });
     });
   }, []);
@@ -37,42 +42,46 @@ const Messenger = ({ user }) => {
 
   useEffect(() => {
     arrivalMessage &&
-      currentChat?.messages.some((message) => (message.senderId == arrivalMessage.senderId) || (message.receiverId == arrivalMessage.senderId)) &&
-      setCurrentChat({...currentChat, messages: currentChat.messages.concat(arrivalMessage)})
+      currentChat?.messages.some(
+        (message) =>
+          message.senderId == arrivalMessage.senderId ||
+          message.receiverId == arrivalMessage.senderId
+      ) &&
+      setCurrentChat({ ...currentChat, messages: currentChat.messages.concat(arrivalMessage) });
   }, [arrivalMessage]);
-
 
   useEffect(() => {
     const getChats = async () => {
       try {
-        const response = await fetch("/api/v1/chats")
+        const response = await fetch("/api/v1/chats");
         if (!response.ok) {
-          throw new Error(`${response.status} ${response.statusText}`)
+          throw new Error(`${response.status} ${response.statusText}`);
         }
-        const body = await response.json()
-        setChats(body.chats)
+        const body = await response.json();
+        setChats(body.chats);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
-    getChats()
-  }, [user.id, currentChat])
+    };
+    getChats();
+  }, [user.id, currentChat]);
 
- 
   const displayChatList = chats.map((chat) => {
-    const firstIncomingMessage = chat.messages.find((message) => message.author !== user.name)
-    chat.partnerName = firstIncomingMessage.author
-    chat.partnerId = firstIncomingMessage.senderId
+    const firstIncomingMessage = chat.messages.find((message) => message.author !== user.name);
+    chat.partnerName = firstIncomingMessage.author;
+    chat.partnerId = firstIncomingMessage.senderId;
     return (
-      <div onClick={()=>setCurrentChat(chat)}>
+      <div onClick={() => setCurrentChat(chat)}>
         <Chat chat={chat} currentUser={user} />
       </div>
-      )
-  })
+    );
+  });
 
   const displayMessageList = currentChat?.messages.map((messageContent) => {
-    return <Message messageContent={messageContent} userId={user.id} friendId={currentChat.partnerId} />
-  })
+    return (
+      <Message messageContent={messageContent} userId={user.id} friendId={currentChat.partnerId} />
+    );
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -81,34 +90,33 @@ const Messenger = ({ user }) => {
       receiverId: currentChat.partnerId,
       text: newMessage,
       chatId: currentChat.id,
-      author: user.name
+      author: user.name,
     };
-    
 
     socket.current.emit("sendMessage", {
       senderId: user.id,
       receiverId: currentChat.partnerId,
       text: newMessage,
       chatId: currentChat.id,
-      author: user.name
+      author: user.name,
     });
 
     try {
       const response = await fetch(`/api/v1/chats`, {
-          method: "post",
-          body: JSON.stringify(message),
-          headers: new Headers({
-            "Content-Type": "application/json"
-          })
+        method: "post",
+        body: JSON.stringify(message),
+        headers: new Headers({
+          "Content-Type": "application/json",
+        }),
       });
       if (!response.ok) {
         const errorMessage = `${response.status} (${response.statusText})`;
         const error = new Error(errorMessage);
         throw error;
       }
-      const body = await response.json()
-      const updatedMessages = currentChat.messages.concat(body)
-      setCurrentChat({...currentChat, messages: updatedMessages});
+      const body = await response.json();
+      const updatedMessages = currentChat.messages.concat(body);
+      setCurrentChat({ ...currentChat, messages: updatedMessages });
       setNewMessage("");
     } catch (err) {
       console.log(err);
@@ -116,8 +124,8 @@ const Messenger = ({ user }) => {
   };
 
   const displayOnlineUsersList = onlineUsers.map((onlineUser) => {
-    return <ChatOnline onlineUser = {onlineUser} />
-  })
+    return <ChatOnline onlineUser={onlineUser} />;
+  });
   return (
     <div className="messenger">
       <div className="chatMenu">
@@ -131,7 +139,7 @@ const Messenger = ({ user }) => {
           {currentChat ? (
             <>
               <div className="chatBoxTop">
-                <ScrollToBottom className="message-container">{displayMessageList} </ScrollToBottom> 
+                <ScrollToBottom className="message-container">{displayMessageList} </ScrollToBottom>
               </div>
               <div className="chatBoxBottom">
                 <textarea
@@ -140,10 +148,10 @@ const Messenger = ({ user }) => {
                   onChange={(event) => setNewMessage(event.target.value)}
                   value={newMessage}
                   onKeyPress={(event) => {
-                    event.key === "Enter" && handleSubmit()
+                    event.key === "Enter" && handleSubmit();
                   }}
                 ></textarea>
-                <button className="chatSubmitButton" onClick={handleSubmit} >
+                <button className="chatSubmitButton" onClick={handleSubmit}>
                   Send &#9658;
                 </button>
               </div>{" "}
@@ -154,12 +162,10 @@ const Messenger = ({ user }) => {
         </div>
       </div>
       <div className="chatOnline">
-        <div className="chatOnlineWrapper">
-          {displayOnlineUsersList}
-        </div>
+        <div className="chatOnlineWrapper">{displayOnlineUsersList}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Messenger
+export default Messenger;
