@@ -4,5 +4,6 @@ const Court = require("./Court.js")
 const Match = require("./Match.js")
 const Chat = require("./Chat.js")
 const Message = require("./Message.js")
+const Friend = require("./Friend.js")
 
-module.exports = {User, Court, Match, Chat, Message};
+module.exports = {User, Court, Match, Chat, Message, Friend};

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"
+
 
 const MyUserProfile = (props) => {
   const userId = props.user.id;
@@ -9,6 +11,7 @@ const MyUserProfile = (props) => {
     skillLevel: "",
     location: "",
   });
+  const [friends, setFriends] = useState([])
 
   const getUserData = async () => {
     const response = await fetch(`/api/v1/users/${userId}`)
@@ -19,11 +22,28 @@ const MyUserProfile = (props) => {
     setUser(body.user)
   };
 
+  const getFriends = async () => {
+    try{
+      const response = await fetch('/api/v1/friends')
+      if(!response.ok){
+        throw new Error(`${response.status} ${response.statusText}`)
+      }
+      const body = await response.json()
+      setFriends(body.friends)
+    }catch(error){
+      console.log(`Error in fetch: ${error}`)
+    }
+  }
+
   useEffect(() => {
     getUserData();
+    getFriends()
   }, []);
 
-  
+  const friendsList = friends?.map((friend) => {
+    return <Link to={`/users/${friend.id}`}>{friend.name}</Link>
+  })
+
   return (
     <div className="grid-container profile">
       <div className="grid-x grid-margin-x my-stuff">
@@ -46,7 +66,8 @@ const MyUserProfile = (props) => {
         </div>
 
         <div className="cell small-12 large-7">
-          <h3>Inbox</h3>
+          <h3>Friends</h3>
+          {friendsList}
         </div>
       </div>
     </div>

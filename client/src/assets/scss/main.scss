@@ -89,8 +89,26 @@ h2 {
   color: #000;
 }
 
+.players-container {
+  width: 40vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.players-container .heading {
+  color: #fff;
+  text-align: center;
+}
 .Player {
-  width: 60vw;
+  border-radius: 20px;
+  transition: box-shadow .3s;
+}
+.Player:hover {
+  background-color:rgb(43, 124, 56);
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
 .card-section {
@@ -126,3 +144,26 @@ h2 {
   color: grey;
   font-size: 1.2rem;
 }
+
+.friend-button {
+  width: 225px;
+  height: 50px;
+  margin: 7px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  background: rgb(88, 88, 236);
+  color: #fff;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+}
+
+.friend-button:hover{
+  background-color:rgb(45, 45, 133);
+}
+.friend-button:active{
+  background-color:rgb(10, 10, 126);
+}
+

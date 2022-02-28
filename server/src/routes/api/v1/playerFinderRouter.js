@@ -30,14 +30,24 @@ playerFinderRouter.get("/:id", async (req, res) => {
       player.state = data.addressComponents.state;
       player.longitude = data.coordinates.x;
       player.latitude = data.coordinates.y;
-      player.distance = getDistance(currentUser.latitude, currentUser.longitude, player.latitude, player.longitude)
+      player.distance = getDistance(
+        currentUser.latitude,
+        currentUser.longitude,
+        player.latitude,
+        player.longitude
+      );
+
+      const currentUserFriends = await currentUser.$relatedQuery("friends");
+      player.friendship = currentUserFriends?.some(
+        (currentUserFriend) => currentUserFriend.id === player.id
+      );
     }
 
-    players.sort((a,b) => a.distance - b.distance)
-    
+    players.sort((a, b) => a.distance - b.distance);
+
     return res.status(201).json({ players });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({ errors: error });
   }
 });
