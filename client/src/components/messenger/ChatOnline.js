@@ -1,20 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import federer from "../../assets/federer.jpeg";
 
-const ChatOnline = ({ onlineUsers, currentId }) => {
+const ChatOnline = ({ onlineUser}) => {
   // const [friends, setFriends] = useState([])
   // const [onlineFriends, setOnlineFriends] = useState([])
+  const [user, setUser] = useState(null)
+  useEffect(() => {
+
+    const getUser = async () => {
+      try {
+        const response = await fetch(`/api/v1/users/${onlineUser.userId}`);
+        const body = await response.json();
+        setUser(body.user);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUser();
+  }, [onlineUser]);
+
+  
   return (
     <div className="chatOnline">
-      {onlineUsers.map((onlineUser) => (
         <div className="chatOnlineFriend">
           <div className="chatOnlineImgContainer">
-            <img className="chatOnlineImg" src={federer} />
+            <img className="chatOnlineImg" src={user?.image} />
             <div className="chatOnlineBadge"></div>
           </div>
-          <span className="chatOnlineName">{onlineUser.userName}</span>
+          <span className="chatOnlineName">{user?.name}</span>
         </div>
-      ))}
     </div>
   );
 };
