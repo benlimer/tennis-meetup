@@ -65,7 +65,7 @@ const Messenger = ({ user }) => {
     chat.partnerId = firstIncomingMessage.senderId
     return (
       <div onClick={()=>setCurrentChat(chat)}>
-        <Chat name={firstIncomingMessage.author} />
+        <Chat name={firstIncomingMessage.author} image={user.image} />
       </div>
       )
   })
@@ -153,7 +153,7 @@ const Messenger = ({ user }) => {
       </div>
       <div className="chatOnline">
         <div className="chatOnlineWrapper">
-          <ChatOnline onlineUsers={onlineUsers} currentId={user.id} />
+          <ChatOnline onlineUsers={onlineUsers} currentId={user.id} image={user.image} />
         </div>
       </div>
     </div>

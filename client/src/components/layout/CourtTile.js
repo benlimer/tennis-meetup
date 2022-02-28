@@ -5,8 +5,8 @@ const CourtTile = ({ court }) => {
 
   return (
     <div className="Court cell card small-12 medium-6 large-4">
-      <div className="card-section orange grid-x">
-        <div className="Court-name cell small-6">
+      <div className="card-section grid-x">
+        <div className="Court-name cell">
           <h4>{courtName}</h4>
           <p>address: {address}</p>
         </div>

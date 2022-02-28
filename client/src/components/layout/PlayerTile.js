@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const PlayerTile = ({ player, addFriend, deleteFriend }) => {
-  const { id, name, skillLevel, city, state, age, gender, distance, friendship } = player;
+  const { id, name, skillLevel, city, state, age, gender, distance, friendship, image } = player;
 
   let roundedDistance = Math.round(distance);
 
@@ -25,12 +25,12 @@ const PlayerTile = ({ player, addFriend, deleteFriend }) => {
   }, []);
 
   const addFriendHandler = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     addFriend(id);
   };
 
   const deleteFriendHandler = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     deleteFriend(id);
   };
 
@@ -49,14 +49,28 @@ const PlayerTile = ({ player, addFriend, deleteFriend }) => {
       <Link to={`/users/${id}`}>
         <div className="card-section grid-x">
           <div className="Player-name cell small-6">
+          <img className="profile-pic" src={image} alt="profile-picture"></img>
             <h4>{name}</h4>
             <p className="distance">{roundedDistance}Km away</p>
           </div>
           <div className="Player-detail cell small-6">
             <p>
-              Skill Level: {skillLevel} &nbsp; Location: {city}, {state} &nbsp; Age: {age} &nbsp;
-              Gender: {gender}
+              <strong>Skill Level: </strong>
+              {skillLevel}
             </p>
+            <p>
+              <strong>Location: </strong>
+              {city}, {state}
+            </p>
+            <p>
+              <strong>Age: </strong>
+              {age}{" "}
+            </p>
+            <p>
+              <strong> Gender: </strong>
+              {gender}
+            </p>
+
             {addFriendButton}
           </div>
         </div>

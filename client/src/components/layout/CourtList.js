@@ -26,8 +26,8 @@ const CourtList = (props) => {
   });
 
   return (
-    <div>
-      <h3>Nearby Courts</h3>
+    <div className="courts-container">
+      <h3 className="heading">Nearby Courts</h3>
       {courtTiles}
     </div>
   );
