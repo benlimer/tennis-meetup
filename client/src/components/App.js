@@ -14,7 +14,7 @@ import PlayerList from "./layout/PlayerList";
 import CourtList from "./layout/CourtList";
 import UserProfile from "./layout/UserProfile";
 import Messenger from "./messenger/Messenger";
-import JoinRoom from "./messenger/JoinRoom";
+import AdditionalRegForm from "./registration/AdditionalRegForm";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -37,6 +37,9 @@ const App = (props) => {
       <Switch>
         <Route exact path="/" component={Index} />
         <Route exact path="/users/new" component={RegistrationForm} />
+        <Route exact path="/users/additional">
+            <AdditionalRegForm user={currentUser} setCurrentUser={setCurrentUser}/>
+        </Route>
         <Route exact path="/user-sessions/new" component={SignInForm} />
         <AuthenticatedRoute exact path="/find-players" component={PlayerList} user={currentUser} />
         <AuthenticatedRoute

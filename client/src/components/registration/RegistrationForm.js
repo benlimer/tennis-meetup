@@ -108,7 +108,7 @@ const RegistrationForm = () => {
   };
 
   if (shouldRedirect) {
-    location.href = "/";
+    location.href = "/users/additional";
   }
 
   return (
@@ -148,56 +148,7 @@ const RegistrationForm = () => {
               <FormError error={errors.passwordConfirmation} />
             </label>
           </div>
-          <div>
-            <label>
-              Name
-              <input type="text" name="name" value={userPayload.name} onChange={onInputChange} />
-              <FormError error={errors.name} />
-            </label>
-          </div>
-          <div>
-            <label>
-              Skill Level
-              <input
-                type="text"
-                name="skillLevel"
-                value={userPayload.skillLevel}
-                onChange={onInputChange}
-              />
-              <FormError error={errors.skillLevel} />
-            </label>
-          </div>
-          <div>
-            <label>
-              Location
-              <input
-                type="text"
-                name="location"
-                value={userPayload.location}
-                onChange={onInputChange}
-              />
-              <FormError error={errors.location} />
-            </label>
-          </div>
-          <div>
-            <label>
-              Age
-              <input type="text" name="age" value={userPayload.age} onChange={onInputChange} />
-              <FormError error={errors.age} />
-            </label>
-          </div>
-          <div>
-            <label>
-              Gender
-              <input
-                type="text"
-                name="gender"
-                value={userPayload.gender}
-                onChange={onInputChange}
-              />
-              <FormError error={errors.gender} />
-            </label>
-          </div>
+
           <div>
             <input type="submit" className="button" value="Register" />
           </div>

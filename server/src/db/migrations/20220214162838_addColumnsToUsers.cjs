@@ -7,9 +7,9 @@
  */
 exports.up = async (knex) => {
     return knex.schema.alterTable("users", (table) => {
-        table.string("name").notNullable()
-        table.string("location").notNullable()
-        table.string("skillLevel").notNullable()
+        table.string("name")
+        table.string("location")
+        table.string("skillLevel")
         table.string("gender")
         table.integer("age")
     })

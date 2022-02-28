@@ -89,7 +89,7 @@ h2 {
   color: #000;
 }
 
-.players-container {
+.players-container, .courts-container {
   width: 40vw;
   margin-left: auto;
   margin-right: auto;
@@ -98,15 +98,16 @@ h2 {
   display: block;
 }
 
-.players-container .heading {
+.players-container .heading,
+.courts-container .heading {
   color: #fff;
   text-align: center;
 }
-.Player {
+.Player, .Court {
   border-radius: 20px;
   transition: box-shadow .3s;
 }
-.Player:hover {
+.Player:hover , .Court:hover {
   background-color:rgb(43, 124, 56);
   box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
@@ -130,20 +131,26 @@ h2 {
     font-size: 1.2rem;
     font-weight: 400;
   }
-  .Player-name{
+  .Player-name, .Court-name{
     vertical-align: middle;
     color: white;
     font-size: 1.5rem;
   }
   h4 {
     font-weight: 600;
+    position: relative;
+    top: 10px;
+    left: 40px;
+  }
+  .distance {
+    color: grey;
+    font-size: 1.2rem;
+    position: relative;
+    top: 10px;
+    left: 25px;
   }
 }
 
-.distance {
-  color: grey;
-  font-size: 1.2rem;
-}
 
 .friend-button {
   width: 225px;
@@ -167,3 +174,11 @@ h2 {
   background-color:rgb(10, 10, 126);
 }
 
+.profile-pic{
+  display: flex;
+  height: 150px;
+  width: 150px;
+  border: 2px solid #30b847;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 10px;
+  border-radius: 50%;
+}
