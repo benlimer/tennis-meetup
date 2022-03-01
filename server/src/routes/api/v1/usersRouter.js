@@ -1,8 +1,7 @@
 import express from "express";
 import passport from "passport";
 
-
-import uploadImage from '../../../services/uploadImage.js'
+import uploadImage from "../../../services/uploadImage.js";
 import { User } from "../../../models/index.js";
 import userMatchesRouter from "./userMatches.js";
 
@@ -11,7 +10,10 @@ const usersRouter = new express.Router();
 usersRouter.get("/", async (req, res) => {
   const userId = req.body;
   try {
-    const players = await User.query().where("id", "!=", userId);
+    const users = req.query.search
+      ? await User.query().where("name", "ilike", `%${req.query.search}%`).where("id", "!=", userId)
+      : await User.query().where("id", "!=", userId);
+      return res.status(201).json(users)
   } catch (error) {
     return res.status(500).json({ errors: error });
   }
@@ -33,19 +35,19 @@ usersRouter.post("/", async (req, res) => {
   }
 });
 
-usersRouter.post('/additional', uploadImage.single('image'), async (req, res) => {
-  try{
-    const { body } = req
-    const newBody = {...body}
-    newBody.image = req.file?.location
-    const user = await User.query().findById(req.user.id)
-    const patch = await user.$query().patchAndFetch(newBody)
-    return res.status(201).json({ userInfo: patch})
-  }catch(error){
-    console.log(error)
-    return res.status(500).json({ error })
+usersRouter.post("/additional", uploadImage.single("image"), async (req, res) => {
+  try {
+    const { body } = req;
+    const newBody = { ...body };
+    newBody.image = req.file?.location;
+    const user = await User.query().findById(req.user.id);
+    const patch = await user.$query().patchAndFetch(newBody);
+    return res.status(201).json({ userInfo: patch });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error });
   }
-})
+});
 
 usersRouter.get("/:id", async (req, res) => {
   const userId = req.params.id;

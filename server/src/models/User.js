@@ -79,13 +79,25 @@ class User extends uniqueFunc(Model) {
           to: "messages.receiverId"
         }
       },
-      chats: {
+      senderChats: {
         relation: Model.ManyToManyRelation,
         modelClass: Chat,
         join: {
           from: "users.id",
           through:{
             from: "messages.senderId",
+            to: "messages.chatId"
+          },
+          to: "chats.id" 
+        }
+      },
+      receiverChats: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Chat,
+        join: {
+          from: "users.id",
+          through:{
+            from: "messages.receiverId",
             to: "messages.chatId"
           },
           to: "chats.id" 

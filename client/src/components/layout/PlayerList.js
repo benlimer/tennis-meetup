@@ -67,7 +67,7 @@ const PlayerList = (props) => {
   };
 
   const playerTiles = players.map((player) => {
-    return <PlayerTile key={player.id} player={player} addFriend={addFriend} deleteFriend={deleteFriend}/>;
+    return <PlayerTile key={player.id} player={player} addFriend={addFriend} deleteFriend={deleteFriend} user={props.user}/>;
   });
 
   useEffect(() => {
