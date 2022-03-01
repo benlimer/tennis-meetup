@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import SendMessageForm from "./sendMessageForm";
+import SendMessageForm from "./SendMessageForm";
 
 const PlayerTile = ({ player, addFriend, deleteFriend, user }) => {
   const { id, name, skillLevel, city, state, age, gender, distance, friendship, image } = player;

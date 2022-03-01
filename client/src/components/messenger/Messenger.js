@@ -69,14 +69,21 @@ const Messenger = ({ user }) => {
   const onChangeHandler = (event) => {
     setSearch(event.currentTarget.value)
   }
-  let searchedChats = chats.filter((chat) => {
-    const friendMessage = chat.messages.find((message) => message.author !== user.name)
-    const friendName = friendMessage.author.toLowerCase()
-    return friendName.includes(search)
-  })
-  let mappedChat = search ? searchedChats : chats
 
-  const displayChatList = mappedChat.map((chat) => {
+  // let searchedChats = chats.filter((chat) => {
+  //   let friendName
+  //   if(props.location.state){
+  //     friendName = props.location.state.friendName
+  //     friendName.toLowerCase()
+  //   } else {
+  //     const friendMessage = chat.messages.find((message) => message.author !== user.name)
+  //     friendName = friendMessage.author.toLowerCase()
+  //   }
+  //   return friendName.includes(search)
+  // })
+  // let mappedChat = search ? searchedChats : chats
+
+  const displayChatList = chats.map((chat) => {
     const firstIncomingMessage = chat.messages.find((message) => message.author !== user.name);
     if(firstIncomingMessage){
       chat.partnerId = firstIncomingMessage.senderId;
