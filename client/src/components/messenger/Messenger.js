@@ -11,13 +11,13 @@ const Messenger = ({ user }) => {
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [search, setSearch] = useState("")
   const socket = useRef();
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
       socket.current = io("ws://localhost:3001");
-    }
-    else {
+    } else {
       socket.current = io("https://tennis-meetup.herokuapp.com/");
     }
     socket.current.on("getMessage", (data) => {
@@ -66,16 +66,30 @@ const Messenger = ({ user }) => {
     getChats();
   }, [user.id, currentChat]);
 
-  const displayChatList = chats.map((chat) => {
+  const onChangeHandler = (event) => {
+    setSearch(event.currentTarget.value)
+  }
+  let searchedChats = chats.filter((chat) => {
+    const friendMessage = chat.messages.find((message) => message.author !== user.name)
+    const friendName = friendMessage.author.toLowerCase()
+    return friendName.includes(search)
+  })
+  let mappedChat = search ? searchedChats : chats
+
+  const displayChatList = mappedChat.map((chat) => {
     const firstIncomingMessage = chat.messages.find((message) => message.author !== user.name);
-    chat.partnerName = firstIncomingMessage.author;
-    chat.partnerId = firstIncomingMessage.senderId;
+    if(firstIncomingMessage){
+      chat.partnerId = firstIncomingMessage.senderId;
+    } else {
+      chat.partnerId = chat.messages[0].receiverId
+    }
     return (
       <div onClick={() => setCurrentChat(chat)}>
-        <Chat chat={chat} currentUser={user} />
+        <Chat chat={chat} currentUser={user} search={search}/>
       </div>
     );
   });
+  
 
   const displayMessageList = currentChat?.messages.map((messageContent) => {
     return (
@@ -92,14 +106,15 @@ const Messenger = ({ user }) => {
       chatId: currentChat.id,
       author: user.name,
     };
-
-    socket.current.emit("sendMessage", {
-      senderId: user.id,
-      receiverId: currentChat.partnerId,
-      text: newMessage,
-      chatId: currentChat.id,
-      author: user.name,
-    });
+    if (onlineUsers.some((onlineUser) => onlineUser.userId == currentChat.partnerId)) {
+      socket.current.emit("sendMessage", {
+        senderId: user.id,
+        receiverId: currentChat.partnerId,
+        text: newMessage,
+        chatId: currentChat.id,
+        author: user.name,
+      });
+    }
 
     try {
       const response = await fetch(`/api/v1/chats`, {
@@ -126,11 +141,12 @@ const Messenger = ({ user }) => {
   const displayOnlineUsersList = onlineUsers.map((onlineUser) => {
     return <ChatOnline onlineUser={onlineUser} />;
   });
+
   return (
     <div className="messenger">
       <div className="chatMenu">
         <div className="chatMenuWrapper">
-          <input placeholder="Search for friends" className="chatMenuInput" />
+          <input placeholder="Search for friends" className="chatMenuInput" onChange={onChangeHandler} value={search}/>
           {displayChatList}
         </div>
       </div>
