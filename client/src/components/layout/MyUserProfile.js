@@ -1,55 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 
-
-const MyUserProfile = (props) => {
-  const userId = props.user.id;
-
-  const [user, setUser] = useState({
-    name: "",
-    email: "",
-    skillLevel: "",
-    location: "",
-  });
-  const [friends, setFriends] = useState([])
-
-  const getUserData = async () => {
-    const response = await fetch(`/api/v1/users/${userId}`)
-    if(!response.ok){
-      throw new Error(`${response.status} ${response.statusText}`)
-    }
-    const body = await response.json()
-    setUser(body.user)
-  };
+const MyUserProfile = ({ user }) => {
+  const [friends, setFriends] = useState([]);
 
   const getFriends = async () => {
-    try{
-      const response = await fetch('/api/v1/friends')
-      if(!response.ok){
-        throw new Error(`${response.status} ${response.statusText}`)
+    try {
+      const response = await fetch("/api/v1/friends");
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
       }
-      const body = await response.json()
-      setFriends(body.friends)
-    }catch(error){
-      console.log(`Error in fetch: ${error}`)
+      const body = await response.json();
+      setFriends(body.friends);
+    } catch (error) {
+      console.log(`Error in fetch: ${error}`);
     }
-  }
+  };
 
   useEffect(() => {
-    getUserData();
-    getFriends()
+    getFriends();
   }, []);
 
   const friendsList = friends?.map((friend) => {
-    return <Link to={`/users/${friend.id}`}>{friend.name}</Link>
-  })
+    return (
+      <div>
+        <div className="friend-tile">
+          <Link to={`/users/${friend.id}`} className="friend-list">
+            <img className="friend-profile-pic" src={friend.image} alt="profile-picture"></img>
+            {friend.name}
+          </Link>
+        </div>
+      </div>
+    );
+  });
 
   return (
     <div className="grid-container profile">
-      <div className="grid-x grid-margin-x my-stuff">
+      <div className="grid-x grid-margin-x ">
         <div className="cell small-12">
+          <img className="profile-pic my" src={user.image}></img>
           <h1>My profile</h1>
-
           <p className="user-info">
             Name: {user.name}
             <br />
