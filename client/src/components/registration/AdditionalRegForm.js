@@ -14,9 +14,7 @@ const AdditionalRegForm = (props) => {
   const [profileDetails, setProfileDetails] = useState({});
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  //   const onDrop = useCallback(acceptedFiles => {
-  //     setFormInput({...formInput, image: Object.assign(acceptedFiles[0], {preview: URL.createObjectURL(acceptedFiles[0])})})
-  //   }, [])
+  
   const handleImageUpload = (acceptedFiles) => {
     setFormInput({
       ...formInput,
@@ -42,7 +40,7 @@ const AdditionalRegForm = (props) => {
     newBody.append("skillLevel", formInput.skillLevel);
     newBody.append("image", formInput.image);
     try {
-      const response = await fetch("/api/v1/users/profile", {
+      const response = await fetch("/api/v1/users/additional", {
         method: "POST",
         headers: new Headers({
           Accept: "image/jpeg/png",
@@ -72,7 +70,6 @@ const AdditionalRegForm = (props) => {
       <Redirect
         to={{
           pathname: "/my-user-profile",
-        //   state: { profileDetails },
         }}
       />
     );
