@@ -83,7 +83,7 @@ const Messenger = ({ user }) => {
   // })
   // let mappedChat = search ? searchedChats : chats
 
-  const displayChatList = chats.map((chat) => {
+  const displayChatList = chats.map((chat, index) => {
     const firstIncomingMessage = chat.messages.find((message) => message.author !== user.name);
     if(firstIncomingMessage){
       chat.partnerId = firstIncomingMessage.senderId;
@@ -92,15 +92,15 @@ const Messenger = ({ user }) => {
     }
     return (
       <div onClick={() => setCurrentChat(chat)}>
-        <Chat chat={chat} currentUser={user} search={search}/>
+        <Chat key={index} chat={chat} currentUser={user} search={search}/>
       </div>
     );
   });
   
 
-  const displayMessageList = currentChat?.messages.map((messageContent) => {
+  const displayMessageList = currentChat?.messages.map((messageContent, index) => {
     return (
-      <Message messageContent={messageContent} userId={user.id} friendId={currentChat.partnerId} />
+      <Message key={index} messageContent={messageContent} userId={user.id} friendId={currentChat.partnerId} />
     );
   });
 
@@ -145,8 +145,8 @@ const Messenger = ({ user }) => {
     }
   };
 
-  const displayOnlineUsersList = onlineUsers.map((onlineUser) => {
-    return <ChatOnline onlineUser={onlineUser} />;
+  const displayOnlineUsersList = onlineUsers.map((onlineUser, index) => {
+    return <ChatOnline key={index} onlineUser={onlineUser} />;
   });
 
   return (
