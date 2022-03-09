@@ -8,7 +8,7 @@ const Map = ({ courts, location }) => {
   });
 
   const mapSize = {
-    height: "60vh",
+    height: "90vh",
     width: "100vw",
   };
 
@@ -105,7 +105,7 @@ const Map = ({ courts, location }) => {
   if (!isLoaded) return "Loading...";
   return (
     <>
-      <GoogleMap mapContainerStyle={mapSize} zoom={12} center={defaultCenter} options={options}>
+      <GoogleMap mapContainerStyle={mapSize} zoom={13} center={defaultCenter} options={options}>
         {markers}
         {infoWindow}
       </GoogleMap>
