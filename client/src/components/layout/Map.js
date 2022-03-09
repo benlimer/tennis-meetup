@@ -58,7 +58,6 @@ const Map = ({ courts, location }) => {
   if (selected) {
     const lat = selected.geometry.location.lat;
     const lng = selected.geometry.location.lng;
-    // setDefaultCenter({ lat: lat, lng: lng });
     const API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
     infoWindow = (
       <InfoWindow
