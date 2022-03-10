@@ -8,7 +8,9 @@ class GeoCode{
       const body = await JSON.parse(response.body)
       const coordinates = {
         lat: body.results[0].geometry.location.lat,
-        lng: body.results[0].geometry.location.lng
+        lng: body.results[0].geometry.location.lng,
+        city: body.results[0].address_components[1].short_name,
+        state: body.results[0].address_components[3].short_name
       }
       return coordinates
     }catch(error){
@@ -18,3 +20,4 @@ class GeoCode{
 }
 
 export default GeoCode
+
