@@ -10,11 +10,8 @@ playerFinderRouter.get("/:id", async (req, res) => {
   try {
     const currentUser = await User.query().findById(userId);
     const currentUserCoordinates = await GeoCode.getCoordinates(currentUser.location); 
-    currentUser.city = currentUserCoordinates.city;
-    currentUser.state = currentUserCoordinates.state;
     currentUser.latitude = currentUserCoordinates.lat;
     currentUser.longitude = currentUserCoordinates.lng;
-
     const players = await User.query().where("id", "!=", userId);
     for (const player of players) {
       const otherCoordinates = await GeoCode.getCoordinates(player.location);
