@@ -108,7 +108,7 @@ const AdditionalRegForm = (props) => {
             onChange={handleInputChange}
           ></input>
 
-          <label htmlFor="location">Location: </label>
+          <label htmlFor="location">Location(Zip): </label>
           <input
             className="profile-form-input"
             type="text"

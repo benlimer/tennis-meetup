@@ -35,9 +35,13 @@ body {
 
 body .container {
   background-image:linear-gradient(rgba(0,0,0,0.05),rgba(0,0,0,0.05)),url(../tennis-background.jpeg);
-  height: 100vh;
+  min-height: calc(100vh - 60px);
   background-size: cover;
   background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 7%;
 }
 
 body,
@@ -61,27 +65,31 @@ h2 {
 }
 
 .index {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   color: #fff;
-  height: auto;
+  width: 100%;
+  max-width: 650px;
 }
 
 .index-link {
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  display:flex;
+  gap: 20px;
+  display: flex;
+  width: 100%;
+  margin-top: 30px;
+  flex-wrap: wrap;
 }
 
 .btn{
-  display:flex;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   padding: 10px 30px;
-  color:#eee;
+  color: #eee;
   text-decoration: none;
-  width: 15vw;
+  text-align: center;
+  flex: 1 0 auto;
+  min-width: 300px;
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .btn:hover{
@@ -209,11 +217,12 @@ h2 {
 }
 
 .my {
-  position:relative;
-  left:500px;
+  position:block;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
   height: 200px;
   width: 200px;
-  top:30px;
 }
 .friend-profile-pic{
   display: inline-flex;
@@ -248,3 +257,14 @@ h2 {
   padding: 30px;
   width: 200px;
 }
+
+@media (max-width: 700px) {
+  .body .container {
+  align-items: start;
+  }
+  .index {
+  h1 {
+  font-size: 2.5rem;
+  }
+  }
+  }

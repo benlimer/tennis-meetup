@@ -118,7 +118,7 @@ const PlayerTile = ({ player, addFriend, deleteFriend, user }) => {
               {skillLevel}
             </p>
             <p>
-              <strong>Location: </strong>
+              <strong>Zip: </strong>
               {city}, {state}
             </p>
             <p>
