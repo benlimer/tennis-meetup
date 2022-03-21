@@ -1,4 +1,4 @@
-# [Tennis Meetup](https://github.com/benlimer/tennis-meetup)
+# [Tennis Meetup](https://tennis-meetup.herokuapp.com)
 
 *A web-site that helps tennis players connect with other tennis players locally and find nearby courts.*
 ![Screen Shot 2022-03-21 at 3 48 42 PM](https://user-images.githubusercontent.com/41413114/159352397-f30cca2f-e5f3-415c-8a81-b86a2fe0923f.png)
