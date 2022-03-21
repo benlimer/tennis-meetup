@@ -6,7 +6,7 @@
 
 ### Instructions for use
 
-### Default Accounts to use
+Default Accounts to use:
 ID: d@d.com PW: password
 ID: n@n.com PW: password
 
