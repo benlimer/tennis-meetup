@@ -20,6 +20,16 @@ From main landing page:
   - Hovering over each pin will bring up a info-box, which contains the picture associated with the court, name, rating, and a link to google map directions. 
   - User can search different areas for courts by entering a new zipcode and designating radius of search.
 
+On Top navigation bar:
+- User can click on "messages" to go directly to the messenger tab.
+- User can click on "profile" to see user's own profile page.
+
+### How to best use live chat feature
+ - To test the live chat feature, you must have two different browsers open, each signed in with a different account. 
+  - i.e. One browser will be chrome with "d@d.com" as user and the other browser will be safari with "f@f.com" as the user
+  - If you don't have safari, you can also just open up a incognito chrome browser as your second browser.
+  - Also work with any number of browsers, each will be assigned a different user socket ID. 
+
 ### To-Do
 Some ideas I have for future development:
 - The listing of players will have number of matches/ skill rating next to their name, so that a user has better idea who they are playing with. 
