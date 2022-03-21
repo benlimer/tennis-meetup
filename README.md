@@ -7,8 +7,8 @@
 ### Instructions for use
 
 Default Accounts to use:
-ID: d@d.com PW: password
-ID: n@n.com PW: password
+- ID: d@d.com PW: password
+- ID: n@n.com PW: password
 
 From main landing page:
 - When a user clicks on "Find Players", a user will be brought to a page with a list of other players, sorted by distance. 
