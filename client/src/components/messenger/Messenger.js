@@ -153,7 +153,6 @@ const Messenger = ({ user }) => {
     <div className="messenger">
       <div className="chatMenu">
         <div className="chatMenuWrapper">
-          <input placeholder="Search for friends" className="chatMenuInput" onChange={onChangeHandler} value={search}/>
           {displayChatList}
         </div>
       </div>
