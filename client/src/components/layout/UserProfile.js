@@ -96,7 +96,7 @@ const UserProfile = (props) => {
           <p className="user-info">
             Email: {user.email}
             <br />
-            location: {user.location}
+            Zip: {user.location}
             <br />
             Skill Level: {user.skillLevel}
             <br />

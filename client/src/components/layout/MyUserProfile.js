@@ -36,7 +36,7 @@ const MyUserProfile = ({ user }) => {
 
   return (
     <div className="grid-container profile">
-      <div className="grid-x grid-margin-x ">
+      <div className="my-user-profile grid-x grid-margin-x ">
         <div className="cell small-12">
           <img className="profile-pic my" src={user.image}></img>
           <h1>My profile</h1>
@@ -45,7 +45,7 @@ const MyUserProfile = ({ user }) => {
             <br />
             Email: {user.email}
             <br />
-            location: {user.location}
+            Zip: {user.location}
             <br />
             Skill Level: {user.skillLevel}
             <br />
