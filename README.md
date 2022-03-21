@@ -26,7 +26,7 @@ On Top navigation bar:
 
 ### How to best use live chat feature
  - To test the live chat feature, you must have two different browsers open, each signed in with a different account. 
-  - i.e. One browser will be chrome with "d@d.com" as user and the other browser will be safari with "f@f.com" as the user
+  - i.e. One browser will be chrome with "d@d.com" as user and the other browser will be safari with "n@n.com" as the user
   - If you don't have safari, you can also just open up a incognito chrome browser as your second browser.
   - Also work with any number of browsers, each will be assigned a different user socket ID. 
 
